@@ -1,4 +1,4 @@
-# dracindulu
+# Dramadulu
 
 Web nonton drama Asia bertema retro. Dibuat dengan Next.js 14 (App Router) dan TypeScript.
 
