@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Press_Start_2P, VT323 } from 'next/font/google'
 import Link from 'next/link'
+import SupportModal from '@/components/SupportModal'
 import './globals.css'
 
 const pixel = Press_Start_2P({
@@ -18,8 +19,8 @@ const body = VT323({
 })
 
 export const metadata: Metadata = {
-  title: { default: 'dracindulu', template: '%s | dracindulu' },
-  description: 'Nonton drama Asia sub Indonesia di dracindulu.'
+  title: { default: 'Dramadulu', template: '%s | Dramadulu' },
+  description: 'Nonton drama Asia sub Indonesia gratis dan tanpa iklan di Dramadulu.'
 }
 
 export const viewport: Viewport = {
@@ -32,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <header className="top">
           <Link href="/" className="logo" prefetch={false}>
-            dracindulu
+            Dramadulu
           </Link>
           <form action="/" className="search" role="search">
             <input name="q" type="search" placeholder="Cari judul drama" aria-label="Cari judul drama" />
@@ -42,7 +43,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </form>
         </header>
         <main className="wrap">{children}</main>
-        <footer className="foot">dracindulu. Putar kaset, lupakan kerjaan.</footer>
+        <footer className="foot">© 2026 Dramadulu · nonton drama gratis dan tanpa iklan</footer>
+        <SupportModal />
       </body>
     </html>
   )
