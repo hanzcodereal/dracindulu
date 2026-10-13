@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import LikeButton from '@/components/LikeButton'
 import { getDetail } from '@/lib/asiabox'
 
 export const maxDuration = 30
@@ -43,11 +44,17 @@ export default async function DramaPage({ params }: Props) {
             {d.total_episode} episode
             {film.views ? `, ${film.views.toLocaleString('id-ID')} kali ditonton` : ''}
           </p>
-          {episodes.length ? (
-            <Link href={`/watch/${film.slug}/${first}`} className="btn primary" prefetch={false}>
-              Tonton episode {first}
-            </Link>
-          ) : null}
+          <div className="actions">
+            {episodes.length ? (
+              <Link href={`/watch/${film.slug}/${first}`} className="btn primary" prefetch={false}>
+                Tonton episode {first}
+              </Link>
+            ) : null}
+            <LikeButton
+              variant="full"
+              drama={{ slug: film.slug, title: film.title, image: film.image, episodes: d.total_episode }}
+            />
+          </div>
         </div>
       </section>
 
@@ -65,4 +72,4 @@ export default async function DramaPage({ params }: Props) {
       )}
     </>
   )
-    }
+}
