@@ -28,7 +28,7 @@ export default function FavoritList() {
 
   return (
     <>
-      <p className="stat">{likes.length} drama tersimpan di browser ini</p>
+      <p className="stat">{likes.length} drama tersimpan</p>
       <div className="grid">
         {likes.map((d) => (
           <Card key={d.slug} item={d} />
