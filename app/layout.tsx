@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Press_Start_2P, VT323 } from 'next/font/google'
 import Link from 'next/link'
+import FavLink from '@/components/FavLink'
 import SupportModal from '@/components/SupportModal'
 import './globals.css'
 
@@ -32,9 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="id" className={`${pixel.variable} ${body.variable}`}>
       <body>
         <header className="top">
-          <Link href="/" className="logo" prefetch={false}>
-            Dramadulu
-          </Link>
+          <div className="brand">
+            <Link href="/" className="logo" prefetch={false}>
+              Dramadulu
+            </Link>
+            <FavLink />
+          </div>
           <form action="/" className="search" role="search">
             <input name="q" type="search" placeholder="Cari judul drama" aria-label="Cari judul drama" />
             <button type="submit" className="btn">
