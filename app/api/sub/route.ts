@@ -4,10 +4,20 @@ export const runtime = 'nodejs'
 
 const PRIVATE_HOST = /^(localhost|127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.|0\.|\[)/i
 
+function clean(text: string): string {
+  return text
+    .replace(/\{\\[^}]*\}/g, '')
+    .replace(/<\/?font[^>]*>/gi, '')
+    .replace(
+      /^((?:\d{2}:)?\d{2}:\d{2}[.,]\d{3}\s+-->\s+(?:\d{2}:)?\d{2}:\d{2}[.,]\d{3}).*$/gm,
+      '$1'
+    )
+}
+
 function toVtt(text: string): string {
-  const t = text.replace(/^\uFEFF/, '').replace(/\r/g, '')
-  if (t.startsWith('WEBVTT')) return t
-  return 'WEBVTT\n\n' + t.replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, '$1.$2')
+  const t = clean(text.replace(/^\uFEFF/, '').replace(/\r/g, ''))
+  const body = t.startsWith('WEBVTT') ? t.replace(/^REGION[\s\S]*?\n\n/gm, '') : 'WEBVTT\n\n' + t
+  return body.replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, '$1.$2')
 }
 
 export async function GET(req: NextRequest) {
@@ -37,4 +47,4 @@ export async function GET(req: NextRequest) {
   } catch {
     return new Response('Gagal mengambil subtitle', { status: 502 })
   }
-  }
+}
