@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 
 interface Props {
   src: string
@@ -11,6 +12,7 @@ interface Props {
 export default function Player({ src, subtitle, poster }: Props) {
   const ref = useRef<HTMLVideoElement>(null)
   const [error, setError] = useState('')
+  const [ratio, setRatio] = useState(9 / 16)
 
   useEffect(() => {
     const v = ref.current
@@ -47,13 +49,17 @@ export default function Player({ src, subtitle, poster }: Props) {
   const subOk = subtitle && !/\.ass(\?|$)/i.test(subtitle)
 
   return (
-    <div className="screen">
+    <div className="screen" style={{ '--ar': ratio } as CSSProperties}>
       <video
         ref={ref}
         controls
         playsInline
         preload="metadata"
         poster={poster}
+        onLoadedMetadata={(e) => {
+          const { videoWidth: w, videoHeight: h } = e.currentTarget
+          if (w && h) setRatio(w / h)
+        }}
         onError={() => setError('Video gagal dimuat. Coba muat ulang halaman.')}
       >
         {subOk ? (
